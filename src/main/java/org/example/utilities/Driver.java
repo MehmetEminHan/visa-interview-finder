@@ -1,4 +1,4 @@
-package org.example.utilties;
+package org.example.utilities;
 
 
 import org.openqa.selenium.WebDriver;

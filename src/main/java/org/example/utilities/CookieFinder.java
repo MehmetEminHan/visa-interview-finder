@@ -1,7 +1,5 @@
-package org.example.utilties;
+package org.example.utilities;
 
-import io.restassured.http.Headers;
-import org.apache.http.Header;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.example.request.HeaderEntity;

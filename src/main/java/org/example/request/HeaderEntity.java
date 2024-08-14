@@ -1,7 +1,7 @@
 package org.example.request;
 
-import org.example.utilties.CookieFinder;
-import org.example.utilties.Driver;
+import org.example.utilities.CookieFinder;
+import org.example.utilities.Driver;
 
 import java.util.Map;
 import java.util.HashMap;
