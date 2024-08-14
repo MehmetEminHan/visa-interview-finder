@@ -1,5 +1,7 @@
 package org.example.utilties;
 
+import io.restassured.http.Headers;
+import org.apache.http.Header;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.example.request.HeaderEntity;
@@ -10,11 +12,14 @@ import java.util.Set;
 
 public class CookieFinder {
 
+    // This variables assigned to HeaderEntity field
     public static String cookies = "";
+    public static String requestUrl = "";
+    public static String connectionNumber = "";
 
 
     //Set current cookie to Header Entity's cookie
-    public static Set<Cookie> seleniumCookies(WebDriver driver) {
+    public static String seleniumCookies(WebDriver driver) {
 
         // Get cookies from the browser
         Set<Cookie> seleniumCookies = driver.manage().getCookies();
@@ -42,35 +47,50 @@ public class CookieFinder {
         }
 
         //Set cookies to Header Entity's cookie
-        HeaderEntity.cookie = cookieParser(seleniumCookies);
+        cookies = cookieParser(seleniumCookies);
         System.out.println(HeaderEntity.cookie);
 
-        //Get current URL to find special connection number from URL
-        HeaderEntity.requestUrl = Driver.getDriver().getCurrentUrl();
-        System.out.println(HeaderEntity.requestUrl);
-        HeaderEntity.connectionNumber = HeaderEntity.findConnectionNumberByURL(HeaderEntity.requestUrl);
-        System.out.println(HeaderEntity.connectionNumber);
 
-        //Set HeaderEntity's header based on parsed cookie
-        HeaderEntity.headers.put("Accept", "application/json, text/javascript, */*; q=0.01");
-        HeaderEntity.headers.put("Accept-Encoding", "gzip, deflate, br, zstd");
-        HeaderEntity.headers.put("Accept-Language", "en-US,en;q=0.9,tr-TR;q=0.8,tr;q=0.7");
-        HeaderEntity.headers.put("Connection", "keep-alive");
+        /*//Set HeaderEntity's header based on parsed cookie
+        HeaderEntity.headers.put("Accept", HeaderEntity.accept);
+        HeaderEntity.headers.put("Accept-Encoding", HeaderEntity.acceptEncoding);
+        HeaderEntity.headers.put("Accept-Language", HeaderEntity.acceptLanguage);
+        HeaderEntity.headers.put("Connection", HeaderEntity.connection);
         HeaderEntity.headers.put("Cookie", HeaderEntity.cookie);
-        HeaderEntity.headers.put("Host", "ais.usvisa-info.com");
+        HeaderEntity.headers.put("Host", HeaderEntity.host);
         HeaderEntity.headers.put("Referer", "https://ais.usvisa-info.com/tr-tr/niv/schedule/" + HeaderEntity.connectionNumber + "/appointment");
-        HeaderEntity.headers.put("Sec-Ch-Ua", "\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Google Chrome\";v=\"126\"");
-        HeaderEntity.headers.put("Sec-Ch-Ua-Mobile", "?0");
-        HeaderEntity.headers.put("Sec-Ch-Ua-Platform", "\"Windows\"");
-        HeaderEntity.headers.put("Sec-Fetch-Dest", "empty");
-        HeaderEntity.headers.put("Sec-Fetch-Mode", "cors");
-        HeaderEntity.headers.put("Sec-Fetch-Site", "same-origin");
-        HeaderEntity.headers.put("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36");
-        HeaderEntity.headers.put("X-Csrf-Token", "Sh7X4wBjEvNlYMD2jvbE1JkVuE5rWoV532tymfhT21D+UFvOcWgD6a/Ug+YDHjV0dlmTE2sGDE1k1zdqEDQQNA==");
-        HeaderEntity.headers.put("X-Requested-With", "XMLHttpRequest");
+        HeaderEntity.headers.put("Sec-Ch-Ua", HeaderEntity.sec_ch_ua);
+        HeaderEntity.headers.put("Sec-Ch-Ua-Mobile", HeaderEntity.sec_ch_ua_mobile);
+        HeaderEntity.headers.put("Sec-Ch-Ua-Platform", HeaderEntity.sec_ch_ua_platform);
+        HeaderEntity.headers.put("Sec-Fetch-Dest", HeaderEntity.sec_fetch_dest);
+        HeaderEntity.headers.put("Sec-Fetch-Mode", HeaderEntity.sec_fetch_mode);
+        HeaderEntity.headers.put("Sec-Fetch-Site", HeaderEntity.sec_fetch_site);
+        HeaderEntity.headers.put("User-Agent", HeaderEntity.user_agent);
+        HeaderEntity.headers.put("X-Csrf-Token", HeaderEntity.x_csrf_token);
+        HeaderEntity.headers.put("X-Requested-With", HeaderEntity.x_requested_with);*/
 
 
-        return seleniumCookies;
+        return cookies;
+    }
+
+    //Parse current URL to find connection number
+    public static String urlParser(){
+        //Get current URL to find special connection number from URL and assign to variable
+        requestUrl = Driver.getDriver().getCurrentUrl();
+        System.out.println(requestUrl);
+
+        //Find special connection number and assign to variable
+        connectionNumber = findConnectionNumberByURL(requestUrl);
+        System.out.println(connectionNumber);
+
+        return connectionNumber;
+    }
+
+    //This method finds special connection number to parsing the URL
+    public static String findConnectionNumberByURL(String requestUrl) {
+        int startIndex = requestUrl.indexOf("/schedule/") + "/schedule/".length();
+        int endIndex = requestUrl.indexOf("/appointment");
+        return requestUrl.substring(startIndex, endIndex);
     }
 
     //Parse cookie for POST request headers
