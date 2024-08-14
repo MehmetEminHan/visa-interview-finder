@@ -28,7 +28,7 @@ public class Main {
     //Create Javascript Executor object to run js commands
     public static JavascriptExecutor javascriptExecutor = (JavascriptExecutor) Driver.getDriver();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         //Open requested link via Selenium
         Driver.getDriver().get(ConfigurationReader.getProperty("page_link"));
@@ -63,6 +63,9 @@ public class Main {
             //print response body
             String responseBody = response.getBody().asString();
             String printToLogFile = prettyprintJson(responseBody);
+
+            //Wait 1 minute
+            Thread.sleep(60000);
         }
     }
 
