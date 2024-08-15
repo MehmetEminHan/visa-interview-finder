@@ -1,5 +1,6 @@
 package org.example.request;
 
+import org.example.utilities.ConfigurationReader;
 import org.example.utilities.CookieFinder;
 import org.example.utilities.Driver;
 
@@ -19,7 +20,7 @@ public class HeaderEntity {
     public static final String referer = "https://ais.usvisa-info.com/tr-tr/niv/schedule/" + connectionNumber + "/appointment";
     public static final String sec_ch_ua = "\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Google Chrome\";v=\"126\"";
     public static final String sec_ch_ua_mobile = "?0";
-    public static final String sec_ch_ua_platform = "\"Windows\"";
+    public static final String sec_ch_ua_platform = ConfigurationReader.getProperty("OS");
     public static final String sec_fetch_dest = "empty";
     public static final String sec_fetch_mode = "cors";
     public static final String sec_fetch_site = "same-origin";
