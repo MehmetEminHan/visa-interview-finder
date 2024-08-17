@@ -1,6 +1,7 @@
 package org.example.utilities;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.example.pages.UsAppointmentPage;
 import org.example.pages.UsLoginPage;
 import org.example.entities.ResponseEntity;
@@ -140,5 +141,20 @@ public class PageUtils {
                 continue;
             }
         }
+    }
+
+    public static String prettyprintJson(String json) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            Object jsonObj = mapper.readValue(json, Object.class);
+            String prettyJson = mapper.writeValueAsString(jsonObj);
+            System.out.println("Pretty-Printed Response Body: \n" + prettyJson);
+            return prettyJson;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

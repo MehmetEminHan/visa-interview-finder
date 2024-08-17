@@ -30,20 +30,7 @@ public class Main {
 
         pageUtils.runLogin();
     }
-    public static String prettyprintJson(String json) {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.enable(SerializationFeature.INDENT_OUTPUT);
-            Object jsonObj = mapper.readValue(json, Object.class);
-            String prettyJson = mapper.writeValueAsString(jsonObj);
-            System.out.println("Pretty-Printed Response Body: \n" + prettyJson);
-            return prettyJson;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        return null;
-    }
 
 
 }
