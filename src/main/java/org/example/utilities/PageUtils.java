@@ -29,7 +29,7 @@ public class PageUtils {
     //Create Javascript Executor object to run js commands
     public static JavascriptExecutor javascriptExecutor = (JavascriptExecutor) Driver.getDriver();
 
-    public void runLogin() throws InterruptedException {
+    public void runLogin(String desiredDateMonth, String desiredDateYear) throws InterruptedException {
         //Open requested link via Selenium
         Driver.getDriver().get(ConfigurationReader.getProperty("page_link"));
 
@@ -86,7 +86,7 @@ public class PageUtils {
             Thread.sleep(60000);
         }*/
 
-        findEmptyAppointment("8", "2025");
+        findEmptyAppointment(desiredDateMonth, desiredDateYear);
     }
 
     //Find Empty Appointments and return
@@ -95,8 +95,14 @@ public class PageUtils {
         int counter = 0;
 
         for (; ; ) {
+
+            // Execute JavaScript to find all td elements with data-event='click'
+            JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+            List<WebElement> availableAppointmentsElements = (List<WebElement>) js.executeScript(
+                    "return Array.from(document.querySelectorAll('td[data-event=\"click\"]'));"
+            );
             //Find all available appointment slots
-            List<WebElement> availableAppointmentsElements = usAppointmentPage.calendarDatePickerFirst.findElements(By.cssSelector("td[data-event='click']"));
+            //List<WebElement> availableAppointmentsElements = usAppointmentPage.calendarDatePickerFirst.findElements(By.cssSelector("td[data-event='click']"));
 
             // Check if the list is not empty before processing
             if (!availableAppointmentsElements.isEmpty()) {
@@ -133,7 +139,7 @@ public class PageUtils {
                     usAppointmentPage.randevuyuYenidenZamanlaDateInput.click();
                     continue;
                 }
-            } else {
+            }else {
                 //
                 System.out.println(counter + " No matching elements found.");
                 counter++;
