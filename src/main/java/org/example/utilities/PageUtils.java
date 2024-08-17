@@ -90,7 +90,7 @@ public class PageUtils {
     }
 
     //Find Empty Appointments and return
-    public void findEmptyAppointment(String desiredDateMonth, String desiredDateYear) {
+    public void findEmptyAppointment(String desiredDateMonth, String desiredDateYear) throws InterruptedException {
 
         int counter = 0;
 
@@ -122,8 +122,10 @@ public class PageUtils {
                         .collect(Collectors.toList());
 
                 // Print out each YearMonth object
+                System.out.print("Most early appointment: ");
                 yearMonthList.forEach(System.out::println);
 
+                //Print most early appointment
                 System.out.println("Most early appointment: " + availableAppointmentsElements.get(0).getText());
 
                 if (Integer.parseInt(yearMonthList.get(0).getYear()) <= Integer.parseInt(desiredDateYear) && Integer.parseInt(desiredDateMonth) >= Integer.parseInt(yearMonthList.get(0).getMonth())) {
@@ -135,7 +137,9 @@ public class PageUtils {
 
                     break;
                 } else {
+                    Thread.sleep(30000);
                     Driver.getDriver().navigate().refresh();
+                    Thread.sleep(30000);
                     usAppointmentPage.randevuyuYenidenZamanlaDateInput.click();
                     continue;
                 }
