@@ -2,7 +2,7 @@ package org.example.utilities;
 
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.cookie.BasicClientCookie;
-import org.example.request.HeaderEntity;
+import org.example.entities.HeaderEntity;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 

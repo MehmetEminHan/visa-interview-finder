@@ -1,4 +1,4 @@
-package org.example.request;
+package org.example.entities;
 
 import org.example.utilities.ConfigurationReader;
 import org.example.utilities.CookieFinder;

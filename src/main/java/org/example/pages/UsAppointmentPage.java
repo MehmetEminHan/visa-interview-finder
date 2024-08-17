@@ -12,6 +12,9 @@ public class UsAppointmentPage {
         PageFactory.initElements(Driver.getDriver(), this);
     }
 
+    public String dataYear = " ";
+    public String dataMonth = " ";
+
     //{Web-element} devam et button
     @FindBy(xpath = "//*[@id=\"main\"]/div[2]/div[2]/div[1]/div/div/div[1]/div[2]/ul/li/a")
     public WebElement devamEt;
@@ -32,6 +35,13 @@ public class UsAppointmentPage {
 
     @FindBy(xpath = "//*[@id=\"ui-datepicker-div\"]/div[1]/div/a")
     public WebElement calendarPrevButton;
+
+    @FindBy(xpath = "//*[@id=\"ui-datepicker-div\"]/div[1]")
+    public WebElement calendarDatePickerFirst;
+
+    @FindBy(xpath = "//*[@id=\"ui-datepicker-div\"]/div[2]")
+    public WebElement calendarDatePickerLast;
+
 
 
 }
