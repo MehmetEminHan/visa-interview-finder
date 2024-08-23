@@ -42,6 +42,13 @@ public class UsAppointmentPage {
     @FindBy(xpath = "//*[@id=\"ui-datepicker-div\"]/div[2]")
     public WebElement calendarDatePickerLast;
 
+    @FindBy(xpath = "//*[@id=\"appointments_consulate_appointment_time\"]")
+    public WebElement calendarScheduleTime;
 
+    @FindBy(xpath = "//*[@id=\"appointments_submit_action\"]")
+    public WebElement appointmentSubmitButton;
+
+    @FindBy(xpath = "/html/body/div[6]/div/div/a[2]")
+    public WebElement approveAppointmentButton;
 
 }

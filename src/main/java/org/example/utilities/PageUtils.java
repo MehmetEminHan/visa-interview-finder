@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -89,6 +90,11 @@ public class PageUtils {
         findEmptyAppointment(desiredDateMonth, desiredDateYear);
     }
 
+    //Select appointment
+    public static void selectAppointment(){
+
+    }
+
     //Find Empty Appointments and return
     public void findEmptyAppointment(String desiredDateMonth, String desiredDateYear) throws InterruptedException {
 
@@ -128,12 +134,46 @@ public class PageUtils {
                 //Print most early appointment
                 System.out.println("Most early appointment: " + availableAppointmentsElements.get(0).getText());
 
+                //Select appointment if desired appointment date founded
                 if (Integer.parseInt(yearMonthList.get(0).getYear()) <= Integer.parseInt(desiredDateYear) && Integer.parseInt(desiredDateMonth) >= Integer.parseInt(yearMonthList.get(0).getMonth())) {
 
+                    //Print desired and founded appointment dates into console
                     System.out.println("Desired Month: " + desiredDateMonth + " Desired Year: " + desiredDateYear);
                     System.out.println("Founded Month: " + yearMonthList.get(0).getMonth() + " Founded Year: " + yearMonthList.get(0).getYear());
+
                     //Select most early appointment
                     availableAppointmentsElements.get(0).click();
+
+                    //Select appointment time
+                    Select select = new Select(usAppointmentPage.calendarScheduleTime);
+
+                    //Collect all appointment time web elements in list
+                    List<WebElement> options = select.getOptions();
+                    for (WebElement option : options) {
+                        System.out.println("Option value: " + option.getAttribute("value"));
+                        System.out.println("Option text: " + option.getText());
+                    }
+
+                    if (!options.isEmpty()){
+                        //Click on appointment time drop down
+                        usAppointmentPage.calendarScheduleTime.click();
+
+                        //Wait until appointment times visible
+                        Thread.sleep(5000);
+
+                        //Click on first appointment time
+                        options.get(1).click();
+
+                        //Click on appointment submit button
+                        usAppointmentPage.calendarScheduleTime.click();
+
+                        Thread.sleep(5000);
+
+                        //Click on appointment approve button
+                        usAppointmentPage.approveAppointmentButton.click();
+                    }else{
+                        continue;
+                    }
 
                     break;
                 } else {
@@ -145,7 +185,7 @@ public class PageUtils {
                 }
             }else {
                 //
-                System.out.println(counter + " No matching elements found.");
+                System.out.println(counter + " No matching appointment found.");
                 counter++;
                 usAppointmentPage.calendarNextButton.click();
                 continue;
