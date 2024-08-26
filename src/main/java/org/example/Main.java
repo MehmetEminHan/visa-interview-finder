@@ -31,7 +31,7 @@ public class Main {
         int retryCount = 100;
         int attempt = 0;
 
-        while (attempt < retryCount) {
+        while (attempt < retryCount && pageUtils.getIsFounded()) {
             try {
                 pageUtils.runLogin("4","2025");
             } catch (Exception e) {

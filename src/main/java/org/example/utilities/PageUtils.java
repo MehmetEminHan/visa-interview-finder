@@ -6,7 +6,6 @@ import org.example.pages.UsAppointmentPage;
 import org.example.pages.UsLoginPage;
 import org.example.entities.ResponseEntity;
 import org.example.entities.YearMonth;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -26,6 +25,7 @@ public class PageUtils {
     //Others
     static ObjectMapper mapper = new ObjectMapper();
     public static ResponseEntity responseEntity;
+    public static boolean isFounded = false;
 
     //Create Javascript Executor object to run js commands
     public static JavascriptExecutor javascriptExecutor = (JavascriptExecutor) Driver.getDriver();
@@ -88,11 +88,6 @@ public class PageUtils {
         }*/
 
         findEmptyAppointment(desiredDateMonth, desiredDateYear);
-    }
-
-    //Select appointment
-    public static void selectAppointment(){
-
     }
 
     //Find Empty Appointments and return
@@ -175,6 +170,9 @@ public class PageUtils {
                         continue;
                     }
 
+                    //set true if appointment founded
+                    isFounded = true;
+
                     break;
                 } else {
                     Thread.sleep(30000);
@@ -191,6 +189,10 @@ public class PageUtils {
                 continue;
             }
         }
+    }
+
+    public boolean getIsFounded(){
+        return isFounded;
     }
 
     public static String prettyprintJson(String json) {
