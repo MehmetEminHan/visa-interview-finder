@@ -170,9 +170,10 @@ public class PageUtils {
                         continue;
                     }
 
-                    //set true if appointment founded
-                    isFounded = true;
+                    //Shut down application if required appointment found!
+                    System.exit(0);
 
+                    //break the loop
                     break;
                 } else {
                     Thread.sleep(30000);
@@ -189,10 +190,6 @@ public class PageUtils {
                 continue;
             }
         }
-    }
-
-    public boolean getIsFounded(){
-        return isFounded;
     }
 
     public static String prettyprintJson(String json) {
