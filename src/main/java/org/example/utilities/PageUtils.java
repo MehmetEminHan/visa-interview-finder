@@ -11,6 +11,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.Duration;
 import java.util.List;
@@ -25,7 +27,9 @@ public class PageUtils {
     //Others
     static ObjectMapper mapper = new ObjectMapper();
     public static ResponseEntity responseEntity;
-    public static boolean isFounded = false;
+
+    //Log4j
+    private static final Logger logger = LogManager.getLogger(PageUtils.class);
 
     //Create Javascript Executor object to run js commands
     public static JavascriptExecutor javascriptExecutor = (JavascriptExecutor) Driver.getDriver();
@@ -93,6 +97,7 @@ public class PageUtils {
     //Find Empty Appointments and return
     public void findEmptyAppointment(String desiredDateMonth, String desiredDateYear) throws InterruptedException {
 
+        int refreshCounter = 0;
         int counter = 0;
 
         for (; ; ) {
@@ -122,12 +127,9 @@ public class PageUtils {
                         })
                         .collect(Collectors.toList());
 
-                // Print out each YearMonth object
-                System.out.print("Most early appointment: ");
-                yearMonthList.forEach(System.out::println);
-
-                //Print most early appointment
-                System.out.println("Most early appointment: " + availableAppointmentsElements.get(0).getText());
+                //<====================== LOGS ======================>
+                logger.info("Most early appointment: " + yearMonthList.get(0));
+                logger.info("Avaliable all early appointments " + yearMonthList);
 
                 //Select appointment if desired appointment date founded
                 if (Integer.parseInt(yearMonthList.get(0).getYear()) <= Integer.parseInt(desiredDateYear) && Integer.parseInt(desiredDateMonth) >= Integer.parseInt(yearMonthList.get(0).getMonth())) {
@@ -135,6 +137,10 @@ public class PageUtils {
                     //Print desired and founded appointment dates into console
                     System.out.println("Desired Month: " + desiredDateMonth + " Desired Year: " + desiredDateYear);
                     System.out.println("Founded Month: " + yearMonthList.get(0).getMonth() + " Founded Year: " + yearMonthList.get(0).getYear());
+
+                    //<====================== LOGS ======================>
+                    logger.info("Desired Month: " + desiredDateMonth + " Desired Year: " + desiredDateYear + "\n" + "Founded Month: " + yearMonthList.get(0).getMonth() + " Founded Year: " + yearMonthList.get(0).getYear());
+
 
                     //Select most early appointment
                     availableAppointmentsElements.get(0).click();
@@ -178,16 +184,20 @@ public class PageUtils {
                 } else {
                     Thread.sleep(30000);
                     Driver.getDriver().navigate().refresh();
+                    refreshCounter++;
+
+                    logger.info("====================REFRESH COUNTER=======================\n" + refreshCounter);
                     Thread.sleep(30000);
                     usAppointmentPage.randevuyuYenidenZamanlaDateInput.click();
                     continue;
                 }
             }else {
                 //
-                System.out.println(counter + " No matching appointment found.");
+                logger.info("Calendar page number: " + counter + " --> No matching appointment found.");
+
                 counter++;
+
                 usAppointmentPage.calendarNextButton.click();
-                continue;
             }
         }
     }

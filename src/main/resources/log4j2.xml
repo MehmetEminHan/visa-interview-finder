@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <RollingFile name="FileAppender" fileName="logs/app-log-${date:yyyy-MM-dd}.txt"
+                     filePattern="logs/app-log-%d{yyyy-MM-dd-HH-mm-ss}.%i.txt">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="FileAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>
