@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import org.example.pages.UsAppointmentPage;
 import org.example.pages.UsLoginPage;
 import org.example.entities.ResponseEntity;
+import org.example.utilities.ConfigurationReader;
 import org.example.utilities.Driver;
 import org.example.utilities.PageUtils;
 import org.openqa.selenium.JavascriptExecutor;
@@ -28,12 +29,12 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 
-        int retryCount = 100;
+        int retryCount = Integer.parseInt(ConfigurationReader.getProperty("retryCount"));
         int attempt = 0;
 
         while (attempt < retryCount ) {
             try {
-                pageUtils.runLogin("4","2025");
+                pageUtils.runLogin(ConfigurationReader.getProperty("desiredMonth"),ConfigurationReader.getProperty("desiredYear"));
             } catch (Exception e) {
                 attempt++;
                 // If the max retry count is reached, print the exception
