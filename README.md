@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-The **Visa Appointment Finder Bot** is designed to automatically locate the earliest available visa appointment from a specified date range, without requiring active user input. This project is compatible with both Windows and Mac operating systems and is built to run seamlessly across these platforms.
+The **Visa Appointment Finder is designed to automatically locate the earliest available visa appointment from a specified date range, without requiring active user input. This project is compatible with both Windows and Mac operating systems and is built to run seamlessly across these platforms.
 
 ## Features
 
