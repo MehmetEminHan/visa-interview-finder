@@ -1,4 +1,4 @@
-# Visa Appointment Finder Bot
+# Visa Appointment Finder
 
 ## Project Overview
 
